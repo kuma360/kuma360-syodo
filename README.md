@@ -1,5 +1,5 @@
 # kuma360-syodo
-#Unity1weekのお題「跳ねる」のために作った習字シミュレーション
+#Unity1weekのお題「跳ねる」のために作った書道シミュレーション
 
 https://unityroom.com/games/kuma360-syodo
 
