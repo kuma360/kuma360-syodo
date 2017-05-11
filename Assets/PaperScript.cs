@@ -16,11 +16,11 @@ public class PaperScript : MonoBehaviour {
 	static int SUMI_MAX = 200;
 
 	//真下方向
-	static Vector3 _DOWN = new Vector3 (0, -1, 0);
+	static Vector3 DOWN = new Vector3 (0, -1, 0);
 
 	//紙を初期化する色  (紙は「濃さ」を0~1で表すので、0だと白く1だと黒に近くなります。
   	//直感的に0だと黒、1だと白にしても良かったんですが無計画に作ってたらこうなりました。
-	static Color resetColor = new Color (0, 0, 0, 0);
+	static Color RESET_COLOR = new Color (0, 0, 0, 0);
 
 
 
@@ -73,7 +73,7 @@ public class PaperScript : MonoBehaviour {
 	int _layermask2 = -1;
 
 	//レイを使いまわすので用意
-	Ray _ray = new Ray (Vector3.zero,_DOWN);
+	Ray _ray = new Ray (Vector3.zero,DOWN);
 
 	//////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////
@@ -93,7 +93,7 @@ public class PaperScript : MonoBehaviour {
 		var A = new WaitForEndOfFrame ();
 		for (int I = 0; I < PAPER_W; ++I) {
 			for (int J = 0; J < PAPER_H; ++J) {
-				_target.SetPixel (I,J,resetColor);
+				_target.SetPixel (I,J,RESET_COLOR);
 				++count;
 			}
 
@@ -115,10 +115,10 @@ public class PaperScript : MonoBehaviour {
 	//////////////////////////////////////////////////////////////////////
 	//マウスカーソルの位置の3D座標を得る
 	void getInputPos(ref Vector3 pos) {
-		RaycastHit _hit;
+		RaycastHit hit;
 		var ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		if (Physics.Raycast (ray, out _hit, 1000, _layermask1)) {
-			pos = _hit.point + _hit.normal * .1f;
+		if (Physics.Raycast (ray, out hit, 1000, _layermask1)) {
+			pos = hit.point + hit.normal * .1f;
 		}
 	}
 
@@ -159,7 +159,7 @@ public class PaperScript : MonoBehaviour {
 	void Update () {
 
 		//trueなら「跳ね」操作中
-		bool HANE = false;
+		bool haneru = false;
 
 
 		//クリックの判定
@@ -170,7 +170,7 @@ public class PaperScript : MonoBehaviour {
 		} else {
 			//前のフレームに入力があって、今入力がなければ「跳ね」とみなす。
 			//開発中は他にも条件を付けてたんですが、最終的にはあまり意味のないコードになってます。
-			HANE = _lastInput;
+			haneru = _lastInput;
 		}
 
 		{
@@ -191,7 +191,7 @@ public class PaperScript : MonoBehaviour {
 
 
 		//跳ねの動作
-		if (HANE) {
+		if (haneru) {
 
 			RaycastHit hit;
 
